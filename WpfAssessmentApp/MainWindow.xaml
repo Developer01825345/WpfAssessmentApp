@@ -5,8 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAssessmentApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="800" Width="800">
+    <TabControl>
+        <TabItem Header="Personal Information">
+            <StackPanel Margin="20">
+                <Label Content="First Name:"/>
+                <TextBox Name="FirstNameTextBox" Margin="5" TextChanged="FirstNameTextBox_TextChanged" />
+                <Label Content="Last Name:"/>
+                <TextBox Name="LastNameTextBox" Margin="5" TextChanged="LastNameTextBox_TextChanged" />
+                <Label Content="DOB:"/>
+                <DatePicker Name="DOBDatePicker" Margin="5" SelectedDateChanged="DOBTextBox_TextChanged" />
+                <Label Content="Email:"/>
+                <TextBox Name="EmailTextBox" Margin="5" TextChanged="EmailTextBox_TextChanged" />
+                <Label Content="Gender:"/>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <RadioButton Name="MaleRadioButton" Content="Male" Margin="5" Checked="Gender_Checked" />
+                    <RadioButton Name="FemaleRadioButton" Content="Female" Margin="5" Checked="Gender_Checked" />
+                </StackPanel>
+                <Label Content="Phone:"/>
+                <TextBox Name="PhoneTextBox" Margin="5" TextChanged="Phone_TextChanged" />
+                <Label Content="Language:"/>
+                <ComboBox Name="LanguageComboBox" Margin="5" SelectionChanged="LanguageComboBox_SelectionChanged">
+                    <ComboBoxItem Content="English" IsSelected="True" />
+                    <ComboBoxItem Content="Spanish" />
+                    <ComboBoxItem Content="French" />
+                </ComboBox>
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Button Name="AddButton" Content="Add" Margin="5" Click="AddButton_Click" />
+                    <Button Name="UpdateButton" Content="Update" Margin="5" Click="UpdateButton_Click" />
+                    <Button Name="DeleteButton" Content="Delete" Margin="5" Click="DeleteButton_Click" />
+                </StackPanel>
+                <!-- DataGrid -->
+                <DataGrid Name="UserDataGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" SelectionMode="Single" 
+                    SelectionChanged="UserDataGrid_SelectionChanged"
+                    Height="200" />
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </Window>
