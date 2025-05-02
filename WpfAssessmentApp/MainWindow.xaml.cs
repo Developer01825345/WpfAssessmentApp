@@ -15,6 +15,9 @@ public partial class MainWindow : Window
     private User _selectedUser;
     private bool _isEnabled = false;
 
+    public delegate void ValueBroadcastHandler(string value);
+    public event ValueBroadcastHandler OnValueBroadcast;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -22,6 +25,11 @@ public partial class MainWindow : Window
         GetAllUsers();
         DOBDatePicker.DisplayDateEnd = DateTime.Today;
         SetErrorOnLoad();
+
+        OnValueBroadcast += value =>
+        {
+            lblDisplayName.Content = value + Environment.NewLine;
+        };
     }
 
     private void GetAllUsers()
@@ -148,6 +156,7 @@ public partial class MainWindow : Window
         if (!string.IsNullOrWhiteSpace(FirstNameTextBox.Text))
         {
             RemoveError(FirstNameTextBox);
+            OnValueBroadcast?.Invoke("Firstname: " + FirstNameTextBox.Text);
         }
     }
 
@@ -156,6 +165,7 @@ public partial class MainWindow : Window
         SetError(LastNameTextBox);
         if (!string.IsNullOrWhiteSpace(LastNameTextBox.Text))
             RemoveError(LastNameTextBox);
+            OnValueBroadcast?.Invoke("Lastname: " + LastNameTextBox.Text);
     }
 
     private void DOBTextBox_TextChanged(object sender, SelectionChangedEventArgs e)
@@ -168,10 +178,8 @@ public partial class MainWindow : Window
                 int age = CalculateAge(dob);
                  if (age >= 18)
                 {
-                    MessageBox.Show("error");
-                    //DOBDatePicker.Background = Brushes.White;
-                    //SubmitButton.IsEnabled = true;
-                    RemoveError(DOBDatePicker); // Optional, if you're showing visual error cues
+                    RemoveError(DOBDatePicker);
+                    OnValueBroadcast?.Invoke("Date of Birth: " + dob.ToShortDateString());
                 }
             }
         }
@@ -181,34 +189,43 @@ public partial class MainWindow : Window
     {
         SetError(EmailTextBox);
         if (!string.IsNullOrWhiteSpace(EmailTextBox.Text) && Regex.IsMatch(EmailTextBox.Text, @"^[^@]+@[^@]+\.[^@]+$"))
+        {
             RemoveError(EmailTextBox);
+            OnValueBroadcast?.Invoke("Email: " + EmailTextBox.Text);
+        }
     }
 
     private void Gender_Checked(object sender, RoutedEventArgs e)
     {
         SetError(MaleRadioButton);
         if (MaleRadioButton.IsChecked == true)
-            RemoveError(MaleRadioButton); // Handle the valid case
+        {
+            RemoveError(MaleRadioButton);
+            OnValueBroadcast?.Invoke("Gender: Male");
+        }
     }
     private void Phone_TextChanged(object sender, TextChangedEventArgs e)
     {
         SetError(PhoneTextBox);
         if (!string.IsNullOrWhiteSpace(PhoneTextBox.Text) && Regex.IsMatch(PhoneTextBox.Text, @"^\(\d{3}\) \d{3}-\d{4}$"))
+        {
             RemoveError(PhoneTextBox);
+            OnValueBroadcast?.Invoke("Phone: " + PhoneTextBox.Text);
+        }
     }
 
     private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         SetError(LanguageComboBox);
-        if (LanguageComboBox.SelectedItem != null)
-            RemoveError(LanguageComboBox);
+        if (LanguageComboBox.SelectedItem is ComboBoxItem selectedItem)
+    {
+        RemoveError(LanguageComboBox);
+        string selectedLanguage = selectedItem.Content.ToString();
+        OnValueBroadcast?.Invoke("Language: " + selectedLanguage);
+    }
     }
 
-    private void ValidateSubmitButton()
-    {
-        AddButton.IsEnabled = _isEnabled;
-    }
-    private int CalculateAge(DateTime dob)
+    private static int CalculateAge(DateTime dob)
     {
         DateTime today = DateTime.Today;
         int age = today.Year - dob.Year;
