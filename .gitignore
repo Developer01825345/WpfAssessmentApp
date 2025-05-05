@@ -1,0 +1,94 @@
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Bb]uilds/
+*.dll
+*.exe
+*.app
+*.log
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider files
+.idea/
+
+# Dotnet CLI
+.project.lock.json
+project.lock.json
+*.nuget.props
+*.nuget.targets
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*.pdb
+*.cache
+*.mdb
+*.dbmdl
+*.bak
+*.backup
+*.log
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+*.psmdcp
+*.symbols.nupkg
+packages/
+.nuget/
+*.cache
+*.config
+
+# Windows image cache
+Thumbs.db
+
+# Windows crash dumps
+*.mdmp
+
+# WPF-specific
+*.g.i.cs
+*.g.cs
+*.i.cs
+*.xaml.cs
+*.xaml
+
+# Publish output
+publish/
+*.publish.xml
+
+# Logs
+*.log
+
+# Test results
+TestResults/
+
+# Local history for some IDEs
+.localhistory/
+
+# User-specific files
+*.vspscc
+*.vssscc
+
+# Rider & JetBrains
+.idea/
+*.sln.iml
+
+# Others
+*.tmp
+*.temp
+*.DS_Store
